@@ -33,7 +33,7 @@
       <el-menu-item index="6" >
         <i class="el-icon-document"></i>
         <span slot="title">exit</span>
-      </el-menu-item>
+      </el-menu-item> 
     </el-menu>
   </el-aside>
   
