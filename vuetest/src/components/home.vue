@@ -1,7 +1,8 @@
 <template>
-  <el-container style="height: 500px; border: 1px solid #eee">
-  <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-    <el-menu :default-openeds="[]">
+<div style='background-color:rgb(238, 241, 246)'>
+  <el-container style="min-height: 670px; border: 1px solid #eee">
+  <el-aside width="200px">
+    <el-menu :default-openeds="[]" style="background-color:#DCDFE6">
       <el-submenu index="1">
         <template slot="title"><i class="el-icon-message"></i>Person</template>
           <el-menu-item index="1-1" >proflie</el-menu-item>
@@ -15,31 +16,35 @@
           <el-menu-item index="2-3">create subject</el-menu-item>
       </el-submenu>
       <el-submenu index="3">
-        <template slot="title"><i class="el-icon-setting"></i>导航三</template>
-        <el-menu-item-group>
-          <template slot="title">分组一</template>
-          <el-menu-item index="3-1">选项1</el-menu-item>
-          <el-menu-item index="3-2">选项2</el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group title="分组2">
-          <el-menu-item index="3-3">选项3</el-menu-item>
-        </el-menu-item-group>
-        <el-submenu index="3-4">
-          <template slot="title">选项4</template>
-          <el-menu-item index="3-4-1">选项4-1</el-menu-item>
-        </el-submenu>
+        <template slot="title"><i class="el-icon-setting"></i>friend</template>
+          <el-menu-item index="3-1">FriendList</el-menu-item>
+          <el-menu-item index="3-2" @click="goTo('/friendSub')">Friend subject</el-menu-item>
+          <el-menu-item index="3-3">create subject</el-menu-item>
       </el-submenu>
+      <el-submenu index="4">
+        <template slot="title"><i class="el-icon-setting"></i>neighbor</template>
+          <el-menu-item index="4-1">neighbor</el-menu-item>
+          <el-menu-item index="4-2">neighbor subject</el-menu-item>
+          <el-menu-item index="4-3">create subject</el-menu-item>
+      </el-submenu>
+      <el-menu-item index="5" >
+        <i class="el-icon-document"></i>
+        <span slot="title">search</span>
+      </el-menu-item>
+      <el-menu-item index="6" >
+        <i class="el-icon-document"></i>
+        <span slot="title">exit</span>
+      </el-menu-item>
     </el-menu>
   </el-aside>
   
   <el-container>
     <el-header style="text-align: right; font-size: 12px">
-      <el-dropdown>
+      <el-dropdown @command="handleCommand">
         <i class="el-icon-setting" style="margin-right: 15px"></i>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>查看</el-dropdown-item>
-          <el-dropdown-item>新增</el-dropdown-item>
-          <el-dropdown-item>删除</el-dropdown-item>
+          <el-dropdown-item command="a">修改个人信息</el-dropdown-item>
+          <el-dropdown-item command="b">退出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
       <span>王小虎</span>
@@ -50,6 +55,7 @@
     </el-main>
   </el-container>
 </el-container>
+</div>
 </template>
 
 
@@ -61,15 +67,39 @@
   }
   
   .el-aside {
+    background-color:#DCDFE6;
     color: #333;
   }
 </style>
 <script>
   export default {
+    data(){
+      return{
+        isCollapse:true
+      }
+    },
     methods: {
+      handleCommand(command) {
+        switch(command){
+          case 'a':
+            break;
+          case 'b':
+            this.goTo('/signin')
+            break;
+        }
+      },
       goTo(path){
           this.$router.replace(path);
+      },
+      profile(){
+        this.$fetch(this._url.login,this.ruleForm).then(res =>{
+              debugger
+              
+            })
       }
+    },
+    mounted(){
+      
     }
   }
 </script>

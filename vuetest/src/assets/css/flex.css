@@ -1,0 +1,43 @@
+.rowwrap{
+    display: flex;
+    flex-flow:row wrap;
+}
+.row{
+    display: flex;
+    flex-direction:row
+}
+.col{
+    display: flex;
+    flex-direction:column
+}
+.middle_y{
+    display: flex;
+    align-items: center
+}
+.middle_y_end{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.middle_x{
+    display: flex;
+    justify-content: center
+}
+.middle_xy{
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+.row_between{
+    display:flex;
+    justify-content: space-between;
+}
+.row_start{
+    display: flex;
+    justify-content: flex-start;
+}
+.middle_y_start{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
