@@ -2,17 +2,17 @@
 <div class='outside'>
     <div class="left"></div>
     <div class="center">
-        <el-card class="box-card" shadow="hover">
-        <div v-for="o in 4" :key="o" class="item">
-            {{'列表内容 ' + o }}
-        </div>
-    </el-card>
+        <blog></blog>
     </div>
     <div class="right"></div>
 </div>
 </template>
 <script>
+    import blog from '@/components/common/blog'
   export default {
+      components:{
+          blog
+      },
     methods: {
       handleCommand(command) {
         switch(command){
@@ -40,8 +40,8 @@
 </script>
 <style scoped>
 .outside{width: 100%;min-height:100px }
-.right{width: 10%;min-height:100px;float: left; }
-.left{width: 10%;min-height:100px;float: left;  }
-.center{width: 80%;min-height:100px;float: left;  }
+.right{width: 14%;min-height:100px;float: left; }
+.left{width: 14%;min-height:100px;float: left;  }
+.center{width: 72%;min-height:100px;float: left;  }
 .item {padding: 18px 0;}
 </style>

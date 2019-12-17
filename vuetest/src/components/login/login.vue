@@ -5,11 +5,11 @@
             <el-form :model="ruleForm" class="relaForm" status-icon :rules="rules" ref="ruleForm" label-width="80px">
               <h4 style="text-align: center;">请使用CommPlat账号登陆</h4>
               <div style="width: 100%;height:40px"></div>
-              <el-form-item label="用户名" prop="pass">
-                <el-input type="text" v-model="ruleForm.pass" autocomplete="off"></el-input>
+              <el-form-item label="邮箱" prop="email">
+                <el-input type="text" v-model="ruleForm.email" autocomplete="off"></el-input>
               </el-form-item>
-              <el-form-item label="密码" prop="checkPass">
-                <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+              <el-form-item label="密码" prop="password">
+                <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
               </el-form-item>
               <el-form-item class="middle_x ">
                 <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
@@ -56,26 +56,25 @@
             }
             setTimeout(() => {
               this.$fetch(this._url.emailcheck,{email:value}).then(res =>{
-                debugger
-                if (res.code) {
-                  callback(new Error('邮箱已被注册'));
-                } else {
-                    callback();
-                }
+                if(res.data == 'success'){
+                callback()
+              }else if(res.data == 'fail'){
+                callback(new Error('邮箱已被注册'));
+              }
               })
             }, 300);
           };
           return {
             isLogin:true,
             ruleForm: {
-          pass: '',
-          checkPass: '',
+          email: '',
+          password: '',
         },
             rules: {
-          pass: [
+          email: [
             { required: true, message: '请输入邮箱', trigger: 'blur' }
           ],
-          checkPass: [
+          password: [
             { required: true, message: '请输入密码', trigger: 'blur' }
           ],
         },
@@ -103,13 +102,20 @@
             submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$fetch(this._url.login,this.ruleForm).then(res =>{
-              debugger
-              
-            })
             this.$router.replace({ path: '/' })
+            this.$fetch(this._url.login,this.ruleForm).then(res =>{
+              if(res.data == 'success'){
+                this.$message({
+                  message: '登录成功',
+                  type: 'success'
+                });
+                this.$router.replace({ path: '/' })
+              }else if(res.data == 'fail'){
+                this.$message.error(res.data);
+              }
+            })
           } else {
-            this.$message('用户名或密码错误');
+            this.$message.error('fail');
           }
         });
       },
@@ -117,15 +123,23 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$fetch(this._url.register,this.regForm).then(res =>{
-              debugger
+              if(res.data == 'success'){
+                this.$message({
+                  message: '注册成功',
+                  type: 'success'
+                });
+                this.$router.replace({ path: '/' })
+              }else if(res.data == 'fail'){
+                this.$message.error(res.data);
+              }
             })
           } else {
-            this.$message('请填写完整');
+            this.$message('fail');
           }
         });
       },
       resetForm(formName) {
-        this.$refs[formName].resetFields();
+        this.ruleForm = {}
       }
         }
       }

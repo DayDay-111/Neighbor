@@ -11,7 +11,7 @@ export const url = {
     findblock:'/findblock',// {uid} 查询用户属于哪个社区block，返回block信息
     findhood:'/findhood',// {uid} 查询用户属于哪个大社区hood，返回hood信息
 
-    createSubect:'/createSubect' ,//{uid,title,type,text,coordinate} 创建话题 type=3（代表block话题），type=4（代表hood话题）
+    createScopeSubject :'/createScopeSubject ' ,//{uid,title,type,text,coordinate} 创建话题 type=3（代表block话题），type=4（代表hood话题）
     BlockSubject:'/BlockSubject' ,//{uid} 查询用户所属的社区block所有的话题
     SubMessage:'/SubMessage' ,//{sid} 查询某个话题中的所有讨论
     HoodSubject:'/HoodSubject' ,//{uid} 查询用户所属的大社区hood所有的话题

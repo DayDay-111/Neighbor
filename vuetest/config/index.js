@@ -11,11 +11,11 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/plat-server':{
-        target: 'http://172.19.16.224:83/',
+      '/neighborhood':{
+        target: 'http://39.105.230.38:8080',
         changeOrigin: true, 
         pathRewrite: {
-          '/plat-server': '' 
+          '/neighborhood': '/neighborhood' 
         },
         secure:false
       }

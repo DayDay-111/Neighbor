@@ -43,6 +43,7 @@
       <el-dropdown @command="handleCommand">
         <i class="el-icon-setting" style="margin-right: 15px"></i>
         <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="c">查看个人信息</el-dropdown-item>
           <el-dropdown-item command="a">修改个人信息</el-dropdown-item>
           <el-dropdown-item command="b">退出</el-dropdown-item>
         </el-dropdown-menu>
@@ -55,36 +56,85 @@
     </el-main>
   </el-container>
 </el-container>
+<el-dialog
+  title="修改个人信息"
+  :visible.sync="editPerVisible"
+  width="50%">
+  <el-form ref="form" :model="editPerForm" label-width="80px">
+  <el-form-item label="email">
+    <el-input v-model="editPerForm.email"></el-input>
+  </el-form-item>
+  <el-form-item label="FirstName">
+    <el-input v-model="editPerForm.FirstName"></el-input>
+  </el-form-item>
+  <el-form-item label="LastName">
+    <el-input v-model="editPerForm.LastName"></el-input>
+  </el-form-item>
+  </el-form>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="editPerVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+  </span>
+</el-dialog>
+<el-dialog
+  title="查看个人信息"
+  :visible.sync="editPerVisible"
+  width="50%">
+  <el-form ref="form" :model="editPerForm" label-width="80px">
+  <el-form-item label="email">
+    <el-input v-model="editPerForm.email"></el-input>
+  </el-form-item>
+  <el-form-item label="FirstName">
+    <el-input v-model="editPerForm.FirstName"></el-input>
+  </el-form-item>
+  <el-form-item label="LastName">
+    <el-input v-model="editPerForm.LastName"></el-input>
+  </el-form-item>
+  </el-form>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="editPerVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+  </span>
+</el-dialog>
 </div>
 </template>
-
-
-<style>
-  .el-header {
-    background-color: #B3C0D1;
-    color: #333;
-    line-height: 60px;
-  }
-  
-  .el-aside {
-    background-color:#DCDFE6;
-    color: #333;
-  }
-</style>
 <script>
+import { mapMutations,mapState } from 'vuex'
   export default {
     data(){
       return{
-        isCollapse:true
+        editPerForm:{
+          FirstName:'',LastName:'',email:''
+        },
+        editPerVisible:false,
+        isCollapse:true,
+        checkPerVisible:false
       }
     },
     methods: {
+      ...mapMutations(['clearUid']),
       handleCommand(command) {
         switch(command){
           case 'a':
+            this.$fetch(this._url.profile,this.uid).then(res =>{
+              if(res.data=='success'){
+                this.editPerVisible = true
+            
+              }
+            })
             break;
           case 'b':
             this.goTo('/signin')
+            this.$fetch(this._url.exit).then(res =>{
+              if(res.data=='success'){
+                this.$store.commit('clearUid')
+            
+              }
+            })
+
+            break;
+          case 'c':
+            this.checkPerVisible = true
             break;
         }
       },
@@ -98,8 +148,23 @@
             })
       }
     },
+    computed:{
+      ...mapState(['uid'])
+    },
     mounted(){
       
     }
   }
 </script>
+<style>
+  .el-header {
+    background-color: #B3C0D1;
+    color: #333;
+    line-height: 60px;
+  }
+  
+  .el-aside {
+    background-color:#DCDFE6;
+    color: #333;
+  }
+</style>
