@@ -16,10 +16,30 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
+      path: '/user',
+      component: () => import('@/components/login/main'),
+      children:[
+        {
+          path:'/signin',
+          component: () => import('@/components/login/login'),
+          name:'login'
+        }
+      ]
+    },
+    {
       path: '/',
       name: 'home',
       component: home,
+      beforeEnter: (to, from, next) => {
+        if(from.path == '/signin'){
+          next()
+        }else if(to.path == '/'){
+          
+          next({name:'login'})
+        }
+      },
       children: [
+        {path:'/friendSub',component: () => import('@/components/friend/friendSub')},
         {path: '/page2', name: 'page2', component: page2},
         {path: '/subject', name: 'message', component: subject},
         {
