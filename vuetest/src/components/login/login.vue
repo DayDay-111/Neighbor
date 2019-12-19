@@ -103,15 +103,16 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$router.replace({ path: '/' })
-            this.$fetch(this._url.login,this.ruleForm).then(res =>{
-              if(res.data == 'success'){
+            this.$fetch(this._url.login+`?email=${this.ruleForm.email}&password=${this.ruleForm.password}`).then(res =>{
+              if(res.data == 'fail'){
+                this.$message.error(res.data);
+              }else{
                 this.$message({
                   message: '登录成功',
                   type: 'success'
                 });
-                this.$router.replace({ path: '/' })
-              }else if(res.data == 'fail'){
-                this.$message.error(res.data);
+                this.$store.commit('setprofile',{profile:res.data})
+                this.$router.replace({ path: '/home' })
               }
             })
           } else {
@@ -120,15 +121,16 @@
         });
       },
       register(formName) {
+        let {email,password,FirstName,LastName} = this.regForm
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$fetch(this._url.register,this.regForm).then(res =>{
+            this.$fetch(this._url.register+`?email=${email}&password=${password}&FirstName=${FirstName}&LastName=${LastName}`).then(res =>{
               if(res.data == 'success'){
                 this.$message({
                   message: '注册成功',
                   type: 'success'
                 });
-                this.$router.replace({ path: '/' })
+                this.isLogin = true
               }else if(res.data == 'fail'){
                 this.$message.error(res.data);
               }

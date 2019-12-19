@@ -32,11 +32,11 @@
       }
     },
     mounted(){
-        this.$fetch(this._url.friendSubject+`?uid=${this.profile.uid}`).then(res =>{
+        this.$fetch(this._url.HoodSubject+`?uid=${this.profile.uid}`).then(res =>{
             if(res.data=='fail'){
                 this.$message.error('there is no message');
             }else{
-               this.bslist=JSON.parse(JSON.stringify(res.data)) 
+                this.bslist=JSON.parse(JSON.stringify(res.data)) 
             }
             })
     }

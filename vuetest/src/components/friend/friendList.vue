@@ -4,7 +4,7 @@
     <div class="center">
         <el-card class="box-card" shadow="hover">
             <div v-for="item in bslist"  >
-                <div style="cursor: pointer;" @click="showDetail(item.sid)">{{item.title}}   {{item.stime}}</div>
+                <div style="cursor: pointer;">{{item.FirstName}}   {{item.LastName}} </div>
                 <el-divider></el-divider>
             </div>
         </el-card>
@@ -32,7 +32,7 @@
       }
     },
     mounted(){
-        this.$fetch(this._url.friendSubject+`?uid=${this.profile.uid}`).then(res =>{
+        this.$fetch(this._url.friendList+`?uid=${this.profile.uid}`).then(res =>{
             if(res.data=='fail'){
                 this.$message.error('there is no message');
             }else{
