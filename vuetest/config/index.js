@@ -12,8 +12,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/neighborhood':{
-        // target: 'http://39.105.230.38:8080',
-        target: 'http://174.57.251.234:8080',
+        target: 'http://39.105.230.38:8080',
+        
         changeOrigin: true, 
         pathRewrite: {
           '/neighborhood': '/neighborhood' 

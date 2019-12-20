@@ -12,7 +12,7 @@
                 
             
             <div v-for="item in list"  style="margin-top:50px">
-                <div style="cursor: pointer;" @click="showDetail(item.sid)">{{item.title}}   {{item.stime}}
+                <div style="cursor: pointer;" @click="showDetail(item.sid)">{{item.title}}   <span style="margin-left: 50px;">{{item.stime}}</span>
                     <el-tag v-if="item.unread==1" type="danger" style="float:right">unread</el-tag>
                 </div>
 
@@ -50,11 +50,11 @@
       },
     methods: {
         search(){
-            this.$fetch(this._url.searchByKey+`?uid=${this.profile.uid}&keyword=${this.input}&pagesize=${this.pagesize}&page=${this.page}`).then(res =>{
+            this.$fetch(`searchSubject?uid=${this.profile.uid}&keyword=${this.input}&pagesize=${this.pagesize}&page=${this.page}`).then(res =>{
             if(res.data=='fail'){
                 this.$message.error(res.data);
             }else{
-                this.list=res.data
+                this.list=JSON.parse(JSON.stringify(res.data)) 
             }
             })
         },

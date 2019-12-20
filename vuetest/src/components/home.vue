@@ -41,7 +41,7 @@
           <el-dropdown-item command="b">退出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <span>{{profile.FirstName+' '+profile.LastName}}</span>
+      <span>{{profile.firstName+' '+profile.lastName}}</span>
     </el-header>
     
     <el-main>
@@ -116,13 +116,19 @@
   :visible.sync="applyVisible"
   width="50%">
   <el-table :data="applylist" v-if="applylist.length>0">
-    <el-table-column
-    prop="name"
-      label="name">
+    <el-table-column width="100"
+    prop="FirstName"
+      label="FirstName">
       
     </el-table-column>
+   
+      <el-table-column width="100"
+      prop="LastName"
+        label="LastName">
+        
+      </el-table-column>
     <el-table-column
-    prop="title"
+    prop="bname""
       label="block">
       
     </el-table-column>
@@ -137,7 +143,7 @@
       </template>
     </el-table-column>
   </el-table>
-  <el-alert 
+  <el-alert v-if='applylist.length==0'
     title="暂无申请"
     type="info"
     description="当前没有申请加入社区的人"
@@ -166,7 +172,7 @@
     </el-table-column>
   </el-table>
   <div v-else>
-  <el-alert 
+  <el-alert v-if='applyFriendList.length==0'
     title="暂无申请"
     type="info"
     description="当前没有申请您为好友的人"
@@ -363,7 +369,7 @@ import { mapMutations,mapState } from 'vuex'
       addSub(){
         let {touid,title,type,text} = this.addSubForm
         if(this.stype<3){
-           this.$fetch(this._url.createpersonSubject+`?uid=${this.profile.uid}&touid=${this.profile.touid}&title=${this.profile.title}&type=${this.profile.type}&text=${this.profile.text}&longitude=${this.longitude}&latitude=${this.latitude}`).then(res =>{
+           this.$fetch(this._url.createpersonSubject+`?uid=${this.profile.uid}&touid=${touid}&title=${title}&type=${type}&text=${text}&longitude=${this.longitude}&latitude=${this.latitude}&address=${this.addSubForm.address}`).then(res =>{
           if(res.data=='fail'){
                 this.$message.error('fail');
             }else{
@@ -371,10 +377,11 @@ import { mapMutations,mapState } from 'vuex'
                   message: 'send success',
                   type: 'success'
                 });
+                
             }
             })
         }else{
-          this.$fetch(this._url.createScopeSubject+`?uid=${this.profile.uid}&title=${this.profile.title}&type=${this.profile.type}&text=${this.profile.text}&longitude=${this.longitude}&latitude=${this.latitude}`).then(res =>{
+          this.$fetch(this._url.createScopeSubject+`?uid=${this.profile.uid}&title=${title}&type=${type}&text=${text}&longitude=${this.longitude}&latitude=${this.latitude}&address=${this.addSubForm.address}`).then(res =>{
           if(res.data=='fail'){
                 this.$message.error('fail');
             }else{

@@ -4,7 +4,7 @@
     <div class="center">
         <el-card style=" min-height:500px" class="box-card" shadow="hover">
             <div v-for="item in bslist"  >
-                <div style="cursor: pointer;" @click="showDetail(item.sid)">{{item.title}}   {{item.stime}}
+                <div style="cursor: pointer;" @click="showDetail(item.sid)">{{item.title}}   <span style="margin-left: 50px;">{{item.stime}}</span>
                     <el-tag v-if="item.unread==1" type="danger" style="float:right">unread</el-tag>
                 </div>
                 <el-divider></el-divider>
@@ -53,7 +53,7 @@
             this.onSubmit()
       },
       onSubmit(){
-          this.$fetch(this._url.HoodSubject+`?uid=${this.profile.uid}`).then(res =>{
+          this.$fetch(this._url.HoodSubject+`?uid=${this.profile.uid}&pagesize=${this.pagesize}&page=${this.page}`).then(res =>{
             if(res.data=='fail'){
                 this.$message.error('there is no message');
             }else{

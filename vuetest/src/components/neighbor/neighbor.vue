@@ -5,7 +5,7 @@
         <el-card style=" min-height:500px" class="box-card" shadow="hover">
             <div v-for="item in bslist"  >
                 <div style="cursor: pointer;">{{item.FirstName}}   {{item.LastName}} 
-                    <el-button style="float:right" type="primary" @click="deleteNeighbor(item.uid)" size="mini">delete</el-button>
+                    <el-button style="float:right" type="primary" @click='deleteNeighbor(item.uid)' size="mini">delete</el-button>
                 </div>
                 <el-divider></el-divider>
             </div>
@@ -32,14 +32,9 @@
             this.$router.push({
                 path:`/blog/${id}`
             })
-        }
-    },
-    computed:{
-        
-      profile(){
-        return this.$store.state.profile
-      },
-      deleteNeighbor(uid){
+        },
+        deleteNeighbor(uid){
+          console.log(uid)
           this.$fetch(`deleteNeighbor?uid=${this.profile.uid}&touid=${uid}`).then(res =>{
             if(res.data=='fail'){
                 this.$message.error('fail');
@@ -48,15 +43,31 @@
                   message: '已删除',
                   type: 'success'
                 });
+                this.$fetch(this._url.neighborList+`?uid=${this.profile.uid}`).then(res =>{
+            if(res.data=='fail'){
+                this.$message.error('there is no message');
+            }else{
+                
+               this.bslist=JSON.parse(JSON.stringify(res.data)) 
+            }
+            })
             }
             })
       }
+    },
+    computed:{
+        
+      profile(){
+        return this.$store.state.profile
+      },
+      
     },
     mounted(){
         this.$fetch(this._url.neighborList+`?uid=${this.profile.uid}`).then(res =>{
             if(res.data=='fail'){
                 this.$message.error('there is no message');
             }else{
+                
                this.bslist=JSON.parse(JSON.stringify(res.data)) 
             }
             })

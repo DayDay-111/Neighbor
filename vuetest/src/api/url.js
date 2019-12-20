@@ -12,12 +12,12 @@ export const url = {
     findblock:'/findblock',// {uid} 查询用户属于哪个社区block，返回block信息
     findhood:'/findhood',// {uid} 查询用户属于哪个大社区hood，返回hood信息
 
-    createScopeSubject :'/createScopeSubject ' ,//{uid,title,type,text,longitude,latitude} 创建话题 type=3（代表block话题），type=4（代表hood话题）
+    createScopeSubject :'/createScopeSubject' ,//{uid,title,type,text,longitude,latitude} 创建话题 type=3（代表block话题），type=4（代表hood话题）
     BlockSubject:'/BlockSubject' ,//{uid} 查询用户所属的社区block所有的话题
     SubMessage:'/SubMessage' ,//{sid} 查询某个话题中的所有讨论
     HoodSubject:'/HoodSubject' ,//{uid} 查询用户所属的大社区hood所有的话题
     HoodMemberList:'/HoodMemberList' ,//{uid} 查询大社区hood里所有的成员
-    createpersonSubject :'/createpersonSubject ' ,//{uid,touid,title,type,text,longitude,latitude} type=1 好友话题，type=2 邻居话题,,这两种话题都只可以指定一个人创建，touid就是指定的那个人,可以从hood的成员列表选择朋友，需要对方同意
+    createpersonSubject :'/createpersonSubject' ,//{uid,touid,title,type,text,longitude,latitude} type=1 好友话题，type=2 邻居话题,,这两种话题都只可以指定一个人创建，touid就是指定的那个人,可以从hood的成员列表选择朋友，需要对方同意
     friendList:'/friendList' ,//{uid} 通过用户uid查询朋友列表
     friendSubject:'/friendSubject',//{uid} 通过用户uid查询好友话题
 

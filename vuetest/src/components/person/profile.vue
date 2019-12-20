@@ -13,7 +13,7 @@
             <el-divider></el-divider>
             <div>email:{{profile.email}}</div>
             <el-divider></el-divider>
-            <div>address:<address style="display:inline-block">{{profile.latitude}}</address></div>
+            <div>address:<address style="display:inline-block">{{myaddress}}</address></div>
             <el-divider></el-divider>
             <div>lastlogtime:{{profile.lastlogtime}}</div>
             <el-divider></el-divider>
@@ -27,13 +27,13 @@
   width="50%">
   <el-form ref="form" :model="editPerForm" label-width="100px">
   <el-form-item label="FirstName">
-    <el-input v-model="editPerForm.FirstName"></el-input>
+    <el-input v-model="editPerForm.firstName"></el-input>
   </el-form-item>
   <el-form-item label="LastName">
-    <el-input v-model="editPerForm.LastName"></el-input>
+    <el-input v-model="editPerForm.lastName"></el-input>
   </el-form-item>
   <el-form-item label="gender">
-    <el-input v-model="editPerForm.gender"></el-input>
+    
     <el-select style="width:100%" v-model="editPerForm.gender" placeholder="请选择">
     <el-option
       v-for="item in typelist"
@@ -56,7 +56,6 @@
   <el-form-item label="introduction" >
     <el-input v-model="editPerForm.introduction" type="textarea"></el-input>
   </el-form-item>
-  user/update?uid=1&password=123&FirstName=123&LastName=134&longitude=11.1&latitude=11&gender=1&introduction=123
   </el-form>
   <span slot="footer" class="dialog-footer">
     <el-button @click="editPerVisible = false">取 消</el-button>
@@ -69,6 +68,7 @@
   export default {
       data(){
           return{
+            myaddress:'',
             typelist:[{name:'male',val:1},{name:'female',val:1}],
             address:'',
             latitude:'',
@@ -141,6 +141,7 @@
               })
               var marker = new AMap.Marker()
             map.on('click',e => {
+              
               _this.latitude = e.lnglat.getLat()
               _this.longitude = e.lnglat.getLng() 
               _this.Lat=e.lnglat.getLat()
@@ -197,6 +198,28 @@
         
         
       },
+      getaddr(lng,lat){
+        var that =this
+       
+        AMap.plugin("AMap.Geocoder", function(){
+                var geocoder = new AMap.Geocoder({
+                    radius: 1000 
+                });
+                geocoder.getAddress([lng,lat], function(status, result) {
+                    if (status === 'complete'&&result.regeocode) {
+                      
+                      let res = result.regeocode.addressComponent
+                      that.myaddress = res.township+res.street+res.streetNumber
+                      
+                    }else{
+                      
+                        that.$message.error('根据经纬度查询地址失败')
+                    }
+                });
+              })
+              
+              
+      },
       handleCommand(command) {
         switch(command){
           case 'a':
@@ -222,6 +245,7 @@
     },
     mounted(){
       this.editPerForm=JSON.parse(JSON.stringify(this.profile))
+      this.getaddr(this.profile.longitude,this.profile.latitude)
     }
   }
 </script>

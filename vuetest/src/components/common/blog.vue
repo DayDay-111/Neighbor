@@ -26,7 +26,7 @@
                 <div style="width:300px;margin-right:10px">
                     <el-input v-model="input" type="textarea" placeholder="请输入评论内容"></el-input>
                 </div>
-            <el-button icon='el-icon-search' type="primary" @click="submitMessage">search</el-button>
+            <el-button icon='el-icon-search' type="primary" @click="submitMessage">submit</el-button>
             </div>
     <el-alert  v-if="msglist.length==0"
     title="无评论"
@@ -49,18 +49,7 @@
     <el-button type="primary" @click="replyMessage()">确 定</el-button>
   </span>
     </el-dialog>
-    <!-- <el-dialog
-  title="submitMessage"
-  :visible.sync="repSVis"
-  width="50%" >
-    <el-form-item label="text" >
-    <el-input v-model="repsmsg" type="textarea"></el-input>
-  </el-form-item>
-  <span slot="footer" class="dialog-footer">
-    <el-button @click="repSVis = false">取 消</el-button>
-    <el-button type="primary" @click="submitMessage()">确 定</el-button>
-  </span>
-    </el-dialog> -->
+    
 </div>
 </template>
 <script>
@@ -74,12 +63,13 @@
               pagesize:10,
               page:1,
               repmsg:'',
-              repsmsg:''
+              repsmsg:'',
+              input:''
           }
       },
     methods: {
       replyMessage(){
-        this.$fetch(`replyMessage?uid=${this.profile.uid}&sid=${this.$router.params.id}&text=${this.repmsg}&replymid=${this.replymid}`).then(res =>{
+        this.$fetch(`replyMessage?uid=${this.profile.uid}&sid=${this.$route.params.id}&text=${this.repmsg}&replymid=${this.replymid}`).then(res =>{
             if(res.data=='fail'){
                 this.$message.error(res.data);
             }else{
@@ -92,7 +82,8 @@
             })
       },
       submitMessage(){
-        this.$fetch(`submitMessage?uid=${this.profile.uid}&sid=${this.$router.params.id}&text=${this.repsmsg}`).then(res =>{
+        
+        this.$fetch(`submitMessage?uid=${this.profile.uid}&sid=${this.$route.params.id}&text=${this.repsmsg}`).then(res =>{
             if(res.data=='fail'){
                 this.$message.error(res.data);
             }else{
@@ -113,10 +104,11 @@
             this.onSubmit()
       },
       onSubmit(){
-         this.$fetch(this._url.SubMessage+`?uid=${this.profile.uid}&sid=${this.$router.params.id}&pagesize=${this.pagesize}&page=${this.page}`).then(res =>{
+         this.$fetch(this._url.SubMessage+`?uid=${this.profile.uid}&sid=${this.$route.params.id}&pagesize=${this.pagesize}&page=${this.page}`).then(res =>{
             if(res.data=='fail'){
                 this.$message.error(res.data);
             }else{
+              
                 this.msglist=res.data
             }
             })

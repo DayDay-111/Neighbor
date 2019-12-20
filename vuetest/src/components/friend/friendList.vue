@@ -39,7 +39,7 @@
         return this.$store.state.profile
       },
       deleteFriend(uid){
-          this.$fetch(`deleteFriend?uid=${this.profile.uid}&frienduid=${uid}`).then(res =>{
+          this.$fetch(`deleteFriend?uid=${this.profile.uid}&frienduid=${uid}&pagesize=${this.pagesize}&page=${this.page}`).then(res =>{
             if(res.data=='fail'){
                 this.$message.error('fail');
             }else{
