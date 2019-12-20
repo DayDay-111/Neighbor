@@ -7,8 +7,9 @@
               <div>{{item.FirstName+' '+item.LastName}} <span style="float:right">{{item.mtime}}</span></div>
                 <div style="padding-left:20px">{{item.text}}   
                 </div>
-                <el-tag type="info" v-if='item.replyindex>0' style="float:left;margin-left:100px;position:relative;top:10px" size='mini'>回复{{item.relyindex}}楼</el-tag>
                 <el-tag type="info" style="float:left;position:relative;top:10px" size='mini'>{{item.index}}楼</el-tag>
+                <el-tag type="info" v-if='item.replyindex>0' style="float:left;margin-left:100px;position:relative;top:10px" size='mini'>回复{{item.replyindex}}楼</el-tag>
+                
                 <el-button style="float:right;margin-right:100px" size='mini' type="primary" @click="repVis=true;replymid=item.mid">回复</el-button>
                 <div style="height:30px"></div>
                 <el-divider ></el-divider>
