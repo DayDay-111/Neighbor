@@ -16,8 +16,9 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/user',
+      path: '/',
       component: () => import('@/components/login/main'),
+      redirect:'/signin',
       children:[
         {
           path:'/signin',
@@ -27,19 +28,28 @@ export default new Router({
       ]
     },
     {
-      path: '/',
+      path: '/home',
       name: 'home',
       component: home,
-      beforeEnter: (to, from, next) => {
-        if(from.path == '/signin'){
-          next()
-        }else if(to.path == '/'){
-          
-          next({name:'login'})
-        }
-      },
+      // beforeEnter: (to, from, next) => {
+      //   if(from.path == '/signin'){
+      //     next()
+      //   }else if(to.path == '/'){
+      //     debugger
+      //     next({name:'login'})
+      //   }
+      // },
+      redirect:'/profile',
       children: [
         {path:'/friendSub',component: () => import('@/components/friend/friendSub')},
+        {path:'/profile',name:'profile',component: () => import('@/components/person/profile')},
+        {path:'/myblock',name:'myblock',component: () => import('@/components/person/myblock')},
+        {path:'/friendList',name:'friendList',component: () => import('@/components/friend/friendList')},
+        {path:'/blockSubject',name:'blockSubject',component: () => import('@/components/hoodblock/blockSubject.vue')},
+        {path:'/hoodSubject',name:'hoodSubject',component: () => import('@/components/hoodblock/hoodSubject.vue')},
+        {path:'/neighbor',name:'neighbor',component: () => import('@/components/neighbor/neighbor.vue')},
+        {path:'/neighborSub',name:'neighborSub',component: () => import('@/components/neighbor/neighborSub.vue')},
+        {path:'/blog/:id',name:'blog',component: () => import('@/components/common/blog.vue')},
         {path: '/page2', name: 'page2', component: page2},
         {path: '/subject', name: 'message', component: subject},
         {

@@ -4,14 +4,14 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
-        uid: ''
+        profile: {}
       },
     mutations:{
-        setUid(state){
-            state.uid = val
+        setprofile(state,payload){
+            state.profile = payload.profile
         },
-        clearUid(state){
-            state.uid = ''
+        clearprofile(state){
+            state.profile = ''
         }
     }
     
