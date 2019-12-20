@@ -24,7 +24,7 @@
     </el-pagination>
   <div class="middle_xy" style="margin-top:20px;margin-bottom:20px">
                 <div style="width:300px;margin-right:10px">
-                    <el-input v-model="input" type="textarea" placeholder="请输入评论内容"></el-input>
+                    <el-input v-model="repmsg" type="textarea" placeholder="请输入评论内容"></el-input>
                 </div>
             <el-button icon='el-icon-search' type="primary" @click="submitMessage">submit</el-button>
             </div>
@@ -41,9 +41,9 @@
   title="replyMessage"
   :visible.sync="repVis"
   width="50%" >
-    <el-form-item label="text" >
-    <el-input v-model="repmsg" type="textarea"></el-input>
-  </el-form-item>
+    
+    <el-input v-model="repmsg"  type="textarea"></el-input>
+  
   <span slot="footer" class="dialog-footer">
     <el-button @click="repVis = false">取 消</el-button>
     <el-button type="primary" @click="replyMessage()">确 定</el-button>
