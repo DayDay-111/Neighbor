@@ -25,8 +25,17 @@
       </el-submenu>
       <el-menu-item @click="goTo('/search')" index="5" >
         <i class="el-icon-document"></i>
+<<<<<<< HEAD
+        <span slot="title">search</span>
+      </el-menu-item>
+      <el-menu-item index="6" >
+        <i class="el-icon-document"></i>
+        <span slot="title">exit</span>
+      </el-menu-item> 
+=======
         <span slot="title" >search</span>
       </el-menu-item>
+>>>>>>> a30cd1aadedaff16d4b6a6e7d9387916b8db58f1
     </el-menu>
   </el-aside>
   
