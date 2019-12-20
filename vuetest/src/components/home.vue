@@ -386,7 +386,7 @@ import { mapMutations,mapState } from 'vuex'
                   message: 'send success',
                   type: 'success'
                 });
-                
+                this.addSubVisible=false
             }
             })
         }else{
@@ -398,6 +398,7 @@ import { mapMutations,mapState } from 'vuex'
                   message: 'send success',
                   type: 'success'
                 });
+                this.addSubVisible=false
             }
             })
         }
