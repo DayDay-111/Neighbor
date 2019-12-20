@@ -12,7 +12,7 @@ export const url = {
     findblock:'/findblock',// {uid} 查询用户属于哪个社区block，返回block信息
     findhood:'/findhood',// {uid} 查询用户属于哪个大社区hood，返回hood信息
 
-    createScopeSubject :'/createScopeSubject ' ,//{uid,touid,title,type,text,longitude,latitude} 创建话题 type=3（代表block话题），type=4（代表hood话题）
+    createScopeSubject :'/createScopeSubject ' ,//{uid,title,type,text,longitude,latitude} 创建话题 type=3（代表block话题），type=4（代表hood话题）
     BlockSubject:'/BlockSubject' ,//{uid} 查询用户所属的社区block所有的话题
     SubMessage:'/SubMessage' ,//{sid} 查询某个话题中的所有讨论
     HoodSubject:'/HoodSubject' ,//{uid} 查询用户所属的大社区hood所有的话题
@@ -26,4 +26,7 @@ export const url = {
     neighborSubject:'/neighborSubject' ,//{uid} 通过用户uid查询邻居话题
     //搜索可以通过关键字或者地图上的地点查询，
     searchByKey:'/searchByKey' ,//{uid,keyword} keyword为用户输入，返回所有符合要求的message
+    //replyMessage?uid=1&sid=7&text=test1&replymid=128&latitude=11.112&longitude=12.212                           
+    //submitMessage?uid=1&sid=7&text=test1&latitude=11.112&longitude=12.212                                             
+    //之前那个SubMessage会返回index显示几楼，replyindex，0就是普通的不是回复，数字就是回复的几楼，发送回复的时候传回来的replymid是那条message的mid
 }

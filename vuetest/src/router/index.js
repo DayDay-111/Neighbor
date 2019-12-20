@@ -49,6 +49,7 @@ export default new Router({
         {path:'/hoodSubject',name:'hoodSubject',component: () => import('@/components/hoodblock/hoodSubject.vue')},
         {path:'/neighbor',name:'neighbor',component: () => import('@/components/neighbor/neighbor.vue')},
         {path:'/neighborSub',name:'neighborSub',component: () => import('@/components/neighbor/neighborSub.vue')},
+        {path:'/search',name:'search',component: () => import('@/components/search/search.vue')},
         {path:'/blog/:id',name:'blog',component: () => import('@/components/common/blog.vue')},
         {path: '/page2', name: 'page2', component: page2},
         {path: '/subject', name: 'message', component: subject},

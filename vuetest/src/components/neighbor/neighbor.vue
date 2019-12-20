@@ -2,11 +2,19 @@
 <div class='outside'>
     <div class="left"></div>
     <div class="center">
-        <el-card class="box-card" shadow="hover">
+        <el-card style=" min-height:500px" class="box-card" shadow="hover">
             <div v-for="item in bslist"  >
-                <div style="cursor: pointer;">{{item.FirstName}}   {{item.LastName}} </div>
+                <div style="cursor: pointer;">{{item.FirstName}}   {{item.LastName}} 
+                    <el-button style="float:right" type="primary" @click="deleteNeighbor(item.uid)" size="mini">delete</el-button>
+                </div>
                 <el-divider></el-divider>
             </div>
+            <el-alert v-if="bslist.length==0"
+    title="无邻居"
+    type="info"
+    description="尚无邻居，可以到myblock板块添加"
+    :closable="false"
+    show-icon></el-alert>
         </el-card>
     </div>
     <div class="right"></div>
@@ -27,8 +35,21 @@
         }
     },
     computed:{
+        
       profile(){
         return this.$store.state.profile
+      },
+      deleteNeighbor(uid){
+          this.$fetch(`deleteNeighbor?uid=${this.profile.uid}&touid=${uid}`).then(res =>{
+            if(res.data=='fail'){
+                this.$message.error('fail');
+            }else{
+               this.$message({
+                  message: '已删除',
+                  type: 'success'
+                });
+            }
+            })
       }
     },
     mounted(){

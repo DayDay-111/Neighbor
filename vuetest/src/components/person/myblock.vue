@@ -23,7 +23,25 @@
     show-icon>
   </el-alert>
   <template v-else-if='state == 2'>
-  <el-card style="margin-bottom:20px" class="box-card" shadow="hover" v-for="item in blockList">
+  <el-card style="margin-bottom:20px;min-height:500px" class="box-card" shadow="hover" v-for="item in blockList">
+    <el-table :data="blockList">
+    <el-table-column
+    prop="bname"
+      label="name">
+    </el-table-column>
+    <el-table-column
+    prop="address"
+      label="address">
+    </el-table-column>
+    <el-table-column
+      label="opt"
+      >
+      <template slot-scope="scope">
+        <el-button
+          type="primary" @click="applyBlock(scope.row)" size="mini">apply</el-button>
+      </template>
+    </el-table-column>
+  </el-table>
     <div>blockName:{{item.bname}}</div>
             <el-divider></el-divider>
             <div>blockAddr:<address title="check" style="display:inline-block">{{item.latitude}}</address></div>
@@ -34,16 +52,25 @@
             <el-divider></el-divider>
   </el-card>
   </template>
-  <el-card class="box-card" shadow="hover"  v-else-if='state == 4'>
-    <div>blockName:{{perBlock.bname}}</div>
+  <el-card style=" min-height:500px" class="box-card" shadow="hover"  v-else-if='state == 4'>
+    <div>blockName:{{perBlock.bname}}
+      <el-button style="float:right" type="primary" @click="BlockMemberList" size="mini">查看成员</el-button>
+    </div>
             <el-divider></el-divider>
             <div>blockAddr:<address title="check" style="display:inline-block">{{profile.latitude}}</address></div>
             <el-divider></el-divider>
-            <div>hoodName:{{perBlock.hid}}</div>
+            <div>hoodName:{{perBlock.hname}}
+              <el-button style="float:right" type="primary" @click="HoodMemberList" size="mini">查看成员</el-button>
+            </div>
             <el-divider></el-divider>
             <div>hoodAddr:<address title="check" style="display:inline-block">{{profile.latitude}}</address></div>
             <el-divider></el-divider>
-
+            <div class="middle_x" style="width:100%">
+              <el-button
+          type="primary" @click="exitBlock" size="mini">exitBlock</el-button>
+            </div>
+            
+        
   </el-card>
     </div>
     <div class="right"></div>
@@ -67,26 +94,154 @@
     <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
   </span>
 </el-dialog>
+<el-dialog
+title="appList"
+  :visible.sync="applyVisible"
+  width="50%">
+  <el-table :data="bmlist">
+    <el-table-column
+    prop="name"
+      label="name">
+      
+    </el-table-column>
+    <el-table-column
+    prop="emali"
+      label="email">
+      
+    </el-table-column>
+    <el-table-column
+      label="opt"
+      >
+      <template slot-scope="scope">
+        <el-button
+          type="primary" @click="applyFriend(scope.row)" size="mini"> AddFriend</el-button>
+        <el-button
+          type="primary" @click="addNeighbor(scope.row)" size="mini"> AddFriend</el-button>
+      </template>
+    </el-table-column>
+  </el-table>
+</el-dialog >
+<el-dialog
+title="HoodMember"
+  :visible.sync="HoodMemberListVis"
+  width="50%">
+  <el-table :data="hmlist">
+    <el-table-column
+    prop="name"
+      label="name">
+      
+    </el-table-column>
+    <el-table-column
+    prop="emali"
+      label="email">
+      
+    </el-table-column>
+    <el-table-column
+      label="opt"
+      >
+      <template slot-scope="scope">
+        <el-button
+          type="primary" @click="applyFriend(scope.row)" size="mini"> AddFriend</el-button>
+        <el-button
+          type="primary" @click="addNeighbor(scope.row)" size="mini"> AddFriend</el-button>
+      </template>
+    </el-table-column>
+  </el-table>
+</el-dialog >
 </div>
 </template>
 <script>
   export default {
       data(){
           return{
+            hmlist:[],
+            bmlist:[],
               blockList:[],
               perBlock:{},
+              perHood:{},
               state:'4',
             editPerForm:{},
             editPerVisible:false,
             isEdit:'visibility:hidden',
               circleUrl:"https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+              HoodMemberListVis:false,
+              BlockMemberListVis:false,
           }
       },
     methods: {
       editProfile(){
 
       },
-      
+      exitBlock(){
+        this.$fetch(`exitBlock?uid=${this.profile.uid}`).then(res =>{
+            if(res.data=='fail'){
+                this.$message.error('fail');
+            }else{
+               this.$message({
+                  message: '已退出',
+                  type: 'success'
+                });
+                this.$fetch(this._url.blockstate+`?uid=${this.profile.uid}`).then(res =>{
+              this.state=res.data
+            })
+            }
+            })
+      } ,
+      applyBlock(){
+        this.$fetch(`applyBlock?uid=${this.profile.uid}&bid=${row.bid}`).then(res =>{
+            if(res.data=='fail'){
+                this.$message.error('fail');
+            }else{
+               this.$message({
+                  message: '已申请',
+                  type: 'success'
+                });
+            }
+            })
+      },
+      addNeighbor(row){
+        this.$fetch(`addNeighbor?uid=${this.profile.uid}&touid=${row.uid}`).then(res =>{
+            if(res.data=='fail'){
+                this.$message.error('fail');
+            }else{
+               this.$message({
+                  message: '已添加',
+                  type: 'success'
+                });
+            }
+            })
+      },
+      HoodMemberList(){
+        this.$fetch(this._url.HoodMemberList+`?uid=${this.profile.uid}`).then(res =>{
+          if(res.data=='fail'){
+                this.$message.error('there is no message');
+            }else{
+              this.HoodMemberListVis = true
+               this.hmlist=JSON.parse(JSON.stringify(res.data)) 
+            }
+            })
+      },
+      BlockMemberList(){
+        this.$fetch(this._url.BlockMemberList+`?uid=${this.profile.uid}`).then(res =>{
+          if(res.data=='fail'){
+                this.$message.error('there is no message');
+            }else{
+               this.bmlist=JSON.parse(JSON.stringify(res.data)) 
+            }
+            })
+      },
+      applyFriend(row){
+        this.$fetch(`applyFriend?uid=${this.profile.uid}$replyuid=${row.uid}`).then(res =>{
+          if(res.data=='fail'){
+                this.$message.error('fail');
+            }else{
+              this.$message({
+                  message: '已申请',
+                  type: 'success'
+                });
+            }
+            })
+      }
     },
     computed:{
       profile(){
@@ -102,6 +257,9 @@
             })
         this.$fetch(this._url.findblock+`?uid=${this.profile.uid}`).then(res =>{
               this.perBlock=res.data
+            })
+            this.$fetch(this._url.findhood+`?uid=${this.profile.uid}`).then(res =>{
+              this.perHood=res.data
             })
         this.$fetch(this._url.blockList).then(res =>{
               this.blockList=res.data
