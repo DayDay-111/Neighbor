@@ -13,6 +13,7 @@ module.exports = {
     proxyTable: {
       '/neighborhood':{
         target: 'http://39.105.230.38:8080',
+        
         changeOrigin: true, 
         pathRewrite: {
           '/neighborhood': '/neighborhood' 
