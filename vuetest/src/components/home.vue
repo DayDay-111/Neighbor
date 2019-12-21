@@ -35,10 +35,10 @@
       <el-dropdown @command="handleCommand">
         <i class="el-icon-setting" style="margin-right: 15px"></i>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="c">创建话题</el-dropdown-item>
-         <el-dropdown-item command="a">查看社区加入申请</el-dropdown-item>
-         <el-dropdown-item command="d">查看好友请求</el-dropdown-item>
-          <el-dropdown-item command="b">退出</el-dropdown-item>
+          <el-dropdown-item command="c">Create Subject</el-dropdown-item>
+         <el-dropdown-item command="a">look for request for applying block</el-dropdown-item>
+         <el-dropdown-item command="d">look for friend applying</el-dropdown-item>
+          <el-dropdown-item command="b">exit</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
       <span>{{profile.firstName+' '+profile.lastName}}</span>
@@ -56,7 +56,7 @@
   width="50%" >
   <el-form ref="form" :model="addSubForm" label-width="100px" style="padding:0 50px">
     <el-form-item  label="type">
-    <el-select style="width:100%" v-model="addSubForm.type" @change="handlechange" placeholder="请选择">
+    <el-select style="width:100%" v-model="addSubForm.type" @change="handlechange" placeholder="please select">
     <el-option
       v-for="item in typelist"
       :key="item.val"
@@ -67,7 +67,7 @@
   </el-form-item>
   <template v-if="stype==1">
     <el-form-item label="friend">
-    <el-select style="width:100%" v-model="addSubForm.touid" placeholder="请选择">
+    <el-select style="width:100%" v-model="addSubForm.touid" placeholder="please select">
     <el-option
       v-for="item in friendList"
       :key="item.value"
@@ -79,7 +79,7 @@
   </template>
   <template v-else-if="stype==2">
     <el-form-item label="neighbor">
-    <el-select style="width:100%" v-model="addSubForm.touid" placeholder="请选择">
+    <el-select style="width:100%" v-model="addSubForm.touid" placeholder="please select">
     <el-option
       v-for="item in neighborList"
       :key="item.value"
@@ -107,8 +107,8 @@
   
   </el-form>
   <span slot="footer" class="dialog-footer">
-    <el-button @click="addSubVisible = false">取 消</el-button>
-    <el-button type="primary" @click="addSub()">确 定</el-button>
+    <el-button @click="addSubVisible = false">cancel</el-button>
+    <el-button type="primary" @click="addSub()">submit</el-button>
   </span>
 </el-dialog>
 <el-dialog
@@ -127,11 +127,7 @@
         label="LastName">
         
       </el-table-column>
-    <el-table-column
-    prop="bname""
-      label="block">
-      
-    </el-table-column>
+   
     <el-table-column
       label="opt"
       >
@@ -144,9 +140,9 @@
     </el-table-column>
   </el-table>
   <el-alert v-if='applylist.length==0'
-    title="暂无申请"
+    title="no apply"
     type="info"
-    description="当前没有申请加入社区的人"
+    description="no peopel apply currently"
     :closable="false"
     show-icon></el-alert>
 </el-dialog >
@@ -155,11 +151,18 @@
   :visible.sync="applyFriendListvis"
   width="50%">
   <el-table :data="applyFriendList" v-if="applyFriendList.length>0">
-    <el-table-column
-    prop="name"
-      label="name">
+    <el-table-column width="100"
+    prop="FirstName"
+      label="FirstName">
       
     </el-table-column>
+   
+      <el-table-column width="100"
+      prop="LastName"
+        label="LastName">
+        
+      </el-table-column>
+      
     <el-table-column
       label="opt"
       >
@@ -173,9 +176,9 @@
   </el-table>
   <div v-else>
   <el-alert v-if='applyFriendList.length==0'
-    title="暂无申请"
+    title="no apply"
     type="info"
-    description="当前没有申请您为好友的人"
+    description="no people apply currently"
     :closable="false"
     show-icon></el-alert>
 </div>
@@ -188,7 +191,7 @@ import { mapMutations,mapState } from 'vuex'
   export default {
     data(){
       return{
-        typelist:[{name:'好友话题',val:'1'},{name:'邻居话题',val:'2'},{name:'block话题',val:'3'},{name:'hood话题',val:'4'}],
+        typelist:[{name:'friend subject',val:'1'},{name:'neighbor subject',val:'2'},{name:'block subject',val:'3'},{name:'hood subject',val:'4'}],
         bslist:[],
         addSubForm:{
           touid:'',title:'',text:'',type:'3',address:''
@@ -204,7 +207,7 @@ import { mapMutations,mapState } from 'vuex'
         cardShow:false,
         adcode:'',
         applyVisible:false,
-        applylist:[{name:'222',title:'333'}],
+        applylist:[],
         applyFriendList:[],
         applyFriendListvis:false
       }
@@ -215,10 +218,15 @@ import { mapMutations,mapState } from 'vuex'
         this.stype = val
       },
       agreeApply(agree,row){
+        alert(111)
+        alert(agree)
         this.$fetch(`agreeApply?uid=${this.profile.uid}&applyuid=${this.row.applyuid}&agree=${agree}&bid=${this.row.bid}`).then(res =>{
+          alert(222)
           if(res.data=='fail'){
-                this.$message.error('操作失败');
+        alert("1111")
+                this.$message.error('operation fail');
             }else{
+        alert("11112")
               this.$fetch(`user/applyRequest?uid=${this.profile.uid}`).then(res =>{
           if(res.data=='fail'){
                 this.$message.error('there is no message');
@@ -228,12 +236,12 @@ import { mapMutations,mapState } from 'vuex'
             })
               if(agree==1){
                 this.$message({
-                  message: '已同意',
+                  message: 'has agreed',
                   type: 'success'
                 });
               }else{
                 this.$message({
-                  message: '已拒绝',
+                  message: 'has refused',
                   type: 'success'
                 });
               }
@@ -242,19 +250,19 @@ import { mapMutations,mapState } from 'vuex'
             })
       },
       agreeFriend(agree,row){
-        this.$fetch(`agreeFriend?uid=${this.profile.uid}&applyuid=${this.row.replyuid}&agree=${agree}`).then(res =>{
+        this.$fetch(`agreeFriend?uid=${this.profile.uid}&applyuid=${this.row.uid}&agree=${agree}`).then(res =>{
           if(res.data=='fail'){
-                this.$message.error('操作失败');
+                this.$message.error('operation fail');
             }else{
 
               if(agree==1){
                 this.$message({
-                  message: '已同意',
+                  message: 'has agreed',
                   type: 'success'
                 });
               }else{
                 this.$message({
-                  message: '已拒绝',
+                  message: 'has refued',
                   type: 'success'
                 });
               }
@@ -346,7 +354,7 @@ import { mapMutations,mapState } from 'vuex'
                       let res = result.regeocode.addressComponent
                         _this.addSubForm.address = res.township+res.street+res.streetNumber
                     }else{
-                        log.error('根据经纬度查询地址失败')
+                        log.error('select address fail')
                     }
                 });
               })

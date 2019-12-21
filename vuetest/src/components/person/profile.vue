@@ -15,8 +15,8 @@
             <el-divider></el-divider>
             <div>address:<address style="display:inline-block">{{myaddress}}</address></div>
             <el-divider></el-divider>
-            <div>lastlogtime:{{profile.lastlogtime}}</div>
-            <el-divider></el-divider>
+            <!--<div>lastlogtime:{{profile.lastlogtime}}</div>
+            <el-divider></el-divider>-->
             <div>introduction:{{profile.introduction}}</div>
     </el-card>
     </div>
@@ -84,10 +84,11 @@
       },
     methods: {
       update(){
-        let {FirstName,LastName,gender,introduction}=this.editPerForm
-        this.$fetch(`user/update?uid=${this.profile.uid}&password=${this.profile.password}&FirstName=${FirstName}
-        &LastName=${LastName}&longitude=${this.longitude}&latitude=${this.latitude}&gender=${this.gender}
+        let {firstName,lastName,gender,introduction}=this.editPerForm
+        this.$fetch(`user/update?uid=${this.profile.uid}&password=${this.profile.password}&FirstName=${firstName}
+        &LastName=${lastName}&longitude=${this.longitude}&latitude=${this.latitude}&gender=${this.gender}
         &introduction=${introduction}`).then(res =>{
+        alert(res.data)
             if(res.data=='fail'){
                 this.$message.error('fail');
             }else{

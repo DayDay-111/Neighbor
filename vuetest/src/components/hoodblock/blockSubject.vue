@@ -16,12 +16,12 @@
       :page-sizes="[10, 20, 30, 40]"
       :page-size="pagesize"
       layout="sizes, prev, pager, next"
-      :total="100">
+      :total="pagetotal">
     </el-pagination>
     <el-alert v-else
-    title="无话题"
+    title="no subject"
     type="info"
-    description="当前subject无话题"
+    description="no subject currently"
     :closable="false"
     show-icon></el-alert>
         </el-card>
@@ -36,9 +36,17 @@
               bslist:[],
               pagesize:10,
               page:1,
+              pagetotal:0,
           }
       },
     methods: {
+        selectPagetotal(){
+            alert(this.profile.uid)
+            this.$fetch(this._url.BlocksubPagetotal+`?uid=${this.profile.uid}&pagesize=${this.pagesize}`).then(res=>{
+                alert(111)
+                this.pagetotal=res.data
+            })
+        },
         showDetail(id){
             this.$router.push({
                 path:`/blog/${id}`
@@ -68,6 +76,7 @@
       }
     },
     mounted(){
+        this.selectPagetotal();
         this.onSubmit()
     }
   }

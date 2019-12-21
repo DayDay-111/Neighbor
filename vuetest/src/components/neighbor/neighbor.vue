@@ -10,9 +10,9 @@
                 <el-divider></el-divider>
             </div>
             <el-alert v-if="bslist.length==0"
-    title="无邻居"
+    title="No neighbor"
     type="info"
-    description="尚无邻居，可以到myblock板块添加"
+    description="No neighbor，yo can in myblock to apply"
     :closable="false"
     show-icon></el-alert>
         </el-card>

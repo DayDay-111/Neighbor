@@ -3,20 +3,20 @@
         <div class="out">
           <template v-if="isLogin">
             <el-form :model="ruleForm" class="relaForm" status-icon :rules="rules" ref="ruleForm" label-width="80px">
-              <h4 style="text-align: center;">请使用CommPlat账号登陆</h4>
+              <h4 style="text-align: center;">Please Use acoount to Login</h4>
               <div style="width: 100%;height:40px"></div>
-              <el-form-item label="邮箱" prop="email">
+              <el-form-item label="email" prop="email">
                 <el-input type="text" v-model="ruleForm.email" autocomplete="off"></el-input>
               </el-form-item>
-              <el-form-item label="密码" prop="password">
+              <el-form-item label="password" prop="password">
                 <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
               </el-form-item>
               <el-form-item class="middle_x ">
-                <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
-                <el-button @click="resetForm('ruleForm')">重置</el-button>
+                <el-button type="primary" @click="submitForm('ruleForm')">login</el-button>
+                <el-button @click="resetForm('ruleForm')">reset</el-button>
               </el-form-item>
             </el-form>
-            <div class="bottom"><span>没有账号?</span><span style="color:blue;cursor:pointer" @click="isLogin=!isLogin">点击注册</span></div>
+            <div class="bottom"><span>No account?</span><span style="color:blue;cursor:pointer" @click="isLogin=!isLogin">clock to register</span></div>
           </template>
           <template v-else>
             <el-form :model="regForm" class="relaForm" status-icon :rules="regrules" ref="regForm" label-width="80px">
@@ -55,7 +55,8 @@
               return callback(new Error('请输入邮箱'));
             }
             setTimeout(() => {
-              this.$fetch(this._url.emailcheck,{email:value}).then(res =>{
+              this.$fetch(this._url.emailcheck+`?email=`+value).then(res =>{//,{email:value}
+                alert(res.data)
                 if(res.data == 'success'){
                 callback()
               }else if(res.data == 'fail'){

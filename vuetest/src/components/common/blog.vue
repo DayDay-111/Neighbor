@@ -86,7 +86,7 @@
       },
       submitMessage(){
         
-        this.$fetch(`submitMessage?uid=${this.profile.uid}&sid=${this.$route.params.id}&text=${this.repsmsg}`).then(res =>{
+        this.$fetch(`submitMessage?uid=${this.profile.uid}&sid=${this.$route.params.id}&text=${this.repmsg}`).then(res =>{
             if(res.data=='fail'){
                 this.$message.error(res.data);
             }else{

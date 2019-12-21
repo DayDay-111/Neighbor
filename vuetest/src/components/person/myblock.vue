@@ -4,9 +4,9 @@
     <div class="center">
         <template v-if='state == 1'>
         <el-alert 
-    title="已被拒绝"
+    title="has been refused"
     type="error"
-    description="可以点击下方按钮选择新block加入"
+    description="You can click on the button to choose new blcok to join"
     :closable="false"
     show-icon>
   </el-alert>
@@ -54,13 +54,13 @@
   </template>
   <el-card style=" min-height:500px" class="box-card" shadow="hover"  v-else-if='state == 4'>
     <div>blockName:{{perBlock.bname}}
-      <el-button style="float:right" type="primary" @click="BlockMemberList" size="mini">查看成员</el-button>
+      <el-button style="float:right" type="primary" @click="BlockMemberList" size="mini">look member</el-button>
     </div>
             <el-divider></el-divider>
             <div>blockAddr:<address title="check" style="display:inline-block">{{blockaddr}}</address></div>
             <el-divider></el-divider>
             <div>hoodName:{{perBlock.hname}}
-              <el-button style="float:right" type="primary" @click="HoodMemberList" size="mini">查看成员</el-button>
+              <el-button style="float:right" type="primary" @click="HoodMemberList" size="mini">look member</el-button>
             </div>
             <el-divider></el-divider>
             <div>hoodAddr:<address title="check" style="display:inline-block">{{hoodaddr}}</address></div>
@@ -75,7 +75,7 @@
     </div>
     <div class="right"></div>
     <el-dialog
-  title="修改个人信息"
+  title="modify personal infomation"
   :visible.sync="editPerVisible"
   width="50%">
   <el-form ref="form" :model="editPerForm" label-width="80px">
@@ -90,8 +90,8 @@
   </el-form-item>
   </el-form>
   <span slot="footer" class="dialog-footer">
-    <el-button @click="editPerVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+    <el-button @click="editPerVisible = false">cancel</el-button>
+    <el-button type="primary" @click="dialogVisible = false">submit</el-button>
   </span>
 </el-dialog>
 <el-dialog
@@ -203,6 +203,8 @@ title="HoodMember"
             })
       } ,
       applyBlock(){
+        alert(111)
+        alert(row.bid)
         this.$fetch(`applyBlock?uid=${this.profile.uid}&bid=${row.bid}`).then(res =>{
             if(res.data=='fail'){
                 this.$message.error('fail');
@@ -217,10 +219,10 @@ title="HoodMember"
       addNeighbor(row){
         this.$fetch(`addNeighbor?uid=${this.profile.uid}&touid=${row.uid}`).then(res =>{
             if(res.data=='fail'){
-                this.$message.error('fail');
+                this.$message.error('you have already add this neighor');
             }else{
                this.$message({
-                  message: '已添加',
+                  message: 'successfully apply',
                   type: 'success'
                 });
             }
@@ -249,11 +251,18 @@ title="HoodMember"
       },
       applyFriend(row){
         this.$fetch(`applyFriend?uid=${this.profile.uid}&replyuid=${row.uid}`).then(res =>{
-          if(res.data=='fail'){
-                this.$message.error('fail');
-            }else{
+          if(res.data=='fail1'){
+                this.$message.error('this person has applied you,please check the apply list');
+            }
+            else if(res.data=='fail2'){
+              this.$message.error('you are friend already');
+            }
+            else if(res.data=='fail3'){
+              this.$message.error('you have applied');
+            }
+            else{
               this.$message({
-                  message: '已申请',
+                  message: 'successfully apply',
                   type: 'success'
                 });
             }

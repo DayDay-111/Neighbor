@@ -28,9 +28,9 @@
       :total="100">
     </el-pagination>
     <el-alert v-else style="margin-top:50px"
-    title="无内容"
+    title="no content"
     type="info"
-    description="在上方输入框中输入你感兴趣的内容进行搜索"
+    description="input what you want in the above input area"
     :closable="false"
     show-icon></el-alert >
         </el-card>

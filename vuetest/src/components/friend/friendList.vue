@@ -10,9 +10,9 @@
                 <el-divider></el-divider>
             </div>
             <el-alert v-if="bslist.length==0"
-    title="无好友"
+    title="No friend"
     type="info"
-    description="尚无好友，可以到myblock板块添加"
+    description="no firend, you can apply in the myblcok"
     :closable="false"
     show-icon></el-alert>
         </el-card>
@@ -39,7 +39,7 @@
         return this.$store.state.profile
       },
       deleteFriend(uid){
-          this.$fetch(`deleteFriend?uid=${this.profile.uid}&frienduid=${uid}&pagesize=${this.pagesize}&page=${this.page}`).then(res =>{
+          this.$fetch(`deleteFriend?uid=${this.profile.uid}&frienduid=${uid}`).then(res =>{
             if(res.data=='fail'){
                 this.$message.error('fail');
             }else{

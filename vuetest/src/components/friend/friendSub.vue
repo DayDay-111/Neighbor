@@ -19,9 +19,9 @@
       :total="100">
     </el-pagination>
     <el-alert v-else
-    title="无话题"
+    title="no subject"
     type="info"
-    description="当前subject无话题"
+    description="no subject currently"
     :closable="false"
     show-icon></el-alert>
         </el-card>
