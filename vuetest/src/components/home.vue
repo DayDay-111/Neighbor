@@ -220,7 +220,8 @@ import { mapMutations,mapState } from 'vuex'
       agreeApply(agree,row){
         alert(111)
         alert(agree)
-        this.$fetch(`agreeApply?uid=${this.profile.uid}&applyuid=${this.row.applyuid}&agree=${agree}&bid=${this.row.bid}`).then(res =>{
+        this.$fetch(`agreeApply?uid=${this.profile.uid}&applyuid=${row.applyuid}&agree=${agree}&bid=${row.bid}`).then(res =>{
+    
           alert(222)
           if(res.data=='fail'){
         alert("1111")

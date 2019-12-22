@@ -86,7 +86,7 @@
       update(){
         let {firstName,lastName,gender,introduction}=this.editPerForm
         this.$fetch(`user/update?uid=${this.profile.uid}&password=${this.profile.password}&FirstName=${firstName}
-        &LastName=${lastName}&longitude=${this.longitude}&latitude=${this.latitude}&gender=${this.gender}
+        &LastName=${lastName}&longitude=${this.longitude}&latitude=${this.latitude}&gender=${gender}
         &introduction=${introduction}`).then(res =>{
         alert(res.data)
             if(res.data=='fail'){

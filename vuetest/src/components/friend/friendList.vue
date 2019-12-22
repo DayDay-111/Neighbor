@@ -32,26 +32,20 @@
             this.$router.push({
                 path:`/blog/${id}`
             })
-        }
-    },
-    computed:{
-      profile(){
-        return this.$store.state.profile
-      },
-      deleteFriend(uid){
+        },
+        deleteFriend(uid){
           this.$fetch(`deleteFriend?uid=${this.profile.uid}&frienduid=${uid}`).then(res =>{
             if(res.data=='fail'){
                 this.$message.error('fail');
             }else{
                this.$message({
-                  message: '已删除',
+                  message: '???',
                   type: 'success'
                 });
             }
             })
-      }
-    },
-    mounted(){
+      },
+      geilist(){
         this.$fetch(this._url.friendList+`?uid=${this.profile.uid}`).then(res =>{
             if(res.data=='fail'){
                 this.$message.error('there is no message');
@@ -59,6 +53,16 @@
                this.bslist=JSON.parse(JSON.stringify(res.data)) 
             }
             })
+      }
+    },
+    computed:{
+      profile(){
+        return this.$store.state.profile
+      },
+      
+    },
+    mounted(){
+        this.geilist()
     }
   }
 </script>

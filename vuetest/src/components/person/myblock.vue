@@ -23,15 +23,15 @@
     show-icon>
   </el-alert>
   <template v-else-if='state == 2'>
-  <el-card style="margin-bottom:20px;min-height:500px" class="box-card" shadow="hover" v-for="item in blockList">
+  <el-card style="margin-bottom:20px;min-height:500px" class="box-card" shadow="hover">
     <el-table :data="blockList">
     <el-table-column
     prop="bname"
       label="name">
     </el-table-column>
-    <el-table-column
+    <!-- <el-table-column
     prop="address"
-      label="address">
+      label="address"> -->
     </el-table-column>
     <el-table-column
       label="opt"
@@ -42,14 +42,7 @@
       </template>
     </el-table-column>
   </el-table>
-    <div>blockName:{{item.bname}}</div>
-            <el-divider></el-divider>
-            <div>blockAddr:<address title="check" style="display:inline-block">{{item.latitude}}</address></div>
-            <el-divider></el-divider>
-            <div>hoodName:{{item.hid}}</div>
-            <el-divider></el-divider>
-            <div>hoodAddr:<address title="check" style="display:inline-block">{{item.latitude}}</address></div>
-            <el-divider></el-divider>
+   
   </el-card>
   </template>
   <el-card style=" min-height:500px" class="box-card" shadow="hover"  v-else-if='state == 4'>
@@ -202,7 +195,7 @@ title="HoodMember"
             }
             })
       } ,
-      applyBlock(){
+      applyBlock(row){
         alert(111)
         alert(row.bid)
         this.$fetch(`applyBlock?uid=${this.profile.uid}&bid=${row.bid}`).then(res =>{

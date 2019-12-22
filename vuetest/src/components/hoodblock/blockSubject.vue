@@ -42,7 +42,7 @@
     methods: {
         selectPagetotal(){
             alert(this.profile.uid)
-            this.$fetch(this._url.BlocksubPagetotal+`?uid=${this.profile.uid}&pagesize=${this.pagesize}`).then(res=>{
+            this.$fetch(`BlocksubPagetotal?uid=${this.profile.uid}&pagesize=${this.pagesize}`).then(res=>{
                 alert(111)
                 this.pagetotal=res.data
             })
