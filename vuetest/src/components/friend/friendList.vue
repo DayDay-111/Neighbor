@@ -39,9 +39,16 @@
                 this.$message.error('fail');
             }else{
                this.$message({
-                  message: '???',
+                  message: 'success delete',
                   type: 'success'
-                });
+                });this.$fetch(this._url.friendList+`?uid=${this.profile.uid}`).then(res =>{
+            if(res.data=='fail'){
+                this.$message.error('there is no message');
+            }else{
+                
+               this.bslist=JSON.parse(JSON.stringify(res.data)) 
+            }
+            })
             }
             })
       },

@@ -218,16 +218,10 @@ import { mapMutations,mapState } from 'vuex'
         this.stype = val
       },
       agreeApply(agree,row){
-        alert(111)
-        alert(agree)
         this.$fetch(`agreeApply?uid=${this.profile.uid}&applyuid=${row.applyuid}&agree=${agree}&bid=${row.bid}`).then(res =>{
-    
-          alert(222)
           if(res.data=='fail'){
-        alert("1111")
                 this.$message.error('operation fail');
             }else{
-        alert("11112")
               this.$fetch(`user/applyRequest?uid=${this.profile.uid}`).then(res =>{
           if(res.data=='fail'){
                 this.$message.error('there is no message');
@@ -251,11 +245,18 @@ import { mapMutations,mapState } from 'vuex'
             })
       },
       agreeFriend(agree,row){
-        this.$fetch(`agreeFriend?uid=${this.profile.uid}&applyuid=${this.row.uid}&agree=${agree}`).then(res =>{
+        this.$fetch(`agreeFriend?uid=${row.uid}&replyuid=${this.profile.uid}&agree=${agree}`).then(res =>{
           if(res.data=='fail'){
                 this.$message.error('operation fail');
             }else{
-
+            this.$fetch(`applyFriendList?uid=${this.profile.uid}`).then(res =>{
+          if(res.data=='fail'){
+                this.$message.error('there is no message');
+            }else{
+               this.applyFriendList=JSON.parse(JSON.stringify(res.data)) 
+            }
+            })
+          
               if(agree==1){
                 this.$message({
                   message: 'has agreed',

@@ -41,7 +41,6 @@
       },
     methods: {
         selectPagetotal(){
-            alert(this.profile.uid)
             this.$fetch(`BlocksubPagetotal?uid=${this.profile.uid}&pagesize=${this.pagesize}`).then(res=>{
                 alert(111)
                 this.pagetotal=res.data

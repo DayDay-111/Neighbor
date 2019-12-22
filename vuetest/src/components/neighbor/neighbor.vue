@@ -40,7 +40,7 @@
                 this.$message.error('fail');
             }else{
                this.$message({
-                  message: '已删除',
+                  message: 'success delete',
                   type: 'success'
                 });
                 this.$fetch(this._url.neighborList+`?uid=${this.profile.uid}`).then(res =>{
