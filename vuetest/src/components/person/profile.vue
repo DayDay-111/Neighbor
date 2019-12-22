@@ -85,9 +85,11 @@
     methods: {
       update(){
         let {firstName,lastName,gender,introduction}=this.editPerForm
+        alert(231)
         this.$fetch(`user/update?uid=${this.profile.uid}&password=${this.profile.password}&FirstName=${firstName}
         &LastName=${lastName}&longitude=${this.longitude}&latitude=${this.latitude}&gender=${gender}
         &introduction=${introduction}`).then(res =>{
+          alert(111)
         alert(res.data)
             if(res.data=='fail'){
                 this.$message.error('fail');
